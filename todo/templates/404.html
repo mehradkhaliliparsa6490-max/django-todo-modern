@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link rel="icon" type="image/svg+xml" href="{% static 'todo/favicon.svg' %}">
+    <link rel="stylesheet" href="{% static 'todo/theme.css' %}">
+    <script src="{% static 'todo/theme.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه پیدا نشد | تسک‌منیجر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .gradient-bg { background: linear-gradient(-45deg, #1e1b4b, #4c1d95, #831843, #1e1b4b); background-size: 400% 400%; animation: gradient 8s ease infinite; }
+        @keyframes gradient { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.6s ease-out; }
+        .float { animation: float 3s ease-in-out infinite; }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg flex items-center justify-center p-4 relative overflow-hidden">
+    <div class="absolute top-20 right-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+    <div class="absolute bottom-20 left-20 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+    <div class="glass rounded-3xl shadow-2xl p-10 w-full max-w-lg text-center fade-in-up relative z-10">
+        <div class="flex justify-center mb-6">
+            <div class="w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-2xl shadow-purple-500/50 float">
+                <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <h1 class="text-7xl font-extrabold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">۴۰۴</h1>
+        <h2 class="text-2xl font-bold text-white mb-3">صفحه پیدا نشد</h2>
+        <p class="text-gray-400 mb-8">متأسفانه صفحه‌ای که به دنبالش بودید وجود ندارد یا حذف شده است.</p>
+
+        <a href="{% url 'todos' %}" class="inline-flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold rounded-xl shadow-lg transform hover:-translate-y-0.5 transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            بازگشت به داشبورد
+        </a>
+    </div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="تغییر تم" class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 shadow-lg shadow-purple-500/50 flex items-center justify-center hover:scale-110 transition-all z-50">
+    <svg id="theme-icon" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+</button>
+
+</body>
+</html>

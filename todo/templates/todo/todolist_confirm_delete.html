@@ -1,8 +1,54 @@
-<h2>آیا مطمئن هستید که می‌خواهید این وظیفه را حذف کنید؟</h2>
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link rel="icon" type="image/svg+xml" href="{% static 'todo/favicon.svg' %}">
+    <link rel="stylesheet" href="{% static 'todo/theme.css' %}">
+    <script src="{% static 'todo/theme.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حذف تسک | تسک‌منیجر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .gradient-bg { background: linear-gradient(-45deg, #450a0a, #7f1d1d, #1e1b4b, #450a0a); background-size: 400% 400%; animation: gradient 8s ease infinite; }
+        @keyframes gradient { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.6s ease-out; }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg flex items-center justify-center p-4">
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">بله، حذف کن</button>
-</form>
+<div class="glass rounded-3xl p-8 w-full max-w-md text-center fade-in-up">
+    <div class="flex justify-center mb-6">
+        <div class="w-20 h-20 rounded-full bg-red-500/20 border-2 border-red-500 flex items-center justify-center">
+            <svg class="w-10 h-10 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        </div>
+    </div>
 
-<a href="{% url 'todos' %}">انصراف و بازگشت</a>
+    <h1 class="text-2xl font-bold text-white mb-2">حذف تسک</h1>
+    <p class="text-gray-400 text-sm mb-6">آیا مطمئنی می‌خواهی این تسک را حذف کنی؟ این کار قابل بازگشت نیست.</p>
+
+    {% if object %}
+    <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-4 mb-6 text-right">
+        <p class="text-xs text-gray-400 mb-1">تسک مورد نظر:</p>
+        <p class="font-semibold text-white">{{ object.title }}</p>
+    </div>
+    {% endif %}
+
+    <form method="post" class="flex gap-3">
+        {% csrf_token %}
+        <a href="{% url 'todos' %}" class="flex-1 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-semibold text-white transition">انصراف</a>
+        <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 rounded-xl font-semibold text-white shadow-lg shadow-red-500/30 transform hover:-translate-y-0.5 transition-all">بله، حذف کن</button>
+    </form>
+</div>
+
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="تغییر تم" class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 shadow-lg shadow-purple-500/50 flex items-center justify-center hover:scale-110 transition-all z-50">
+    <svg id="theme-icon" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+</button>
+
+</body>
+</html>

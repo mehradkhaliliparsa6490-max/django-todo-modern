@@ -1,20 +1,97 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
+    <link rel="icon" type="image/svg+xml" href="{% static 'todo/favicon.svg' %}">
+    <link rel="stylesheet" href="{% static 'todo/theme.css' %}">
+    <script src="{% static 'todo/theme.js' %}"></script>
     <meta charset="UTF-8">
-    <title>وظیفه جدید</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسک جدید | تسک‌منیجر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .gradient-bg { background: linear-gradient(-45deg, #0f172a, #1e1b4b, #1e293b, #0f172a); background-size: 400% 400%; animation: gradient 15s ease infinite; }
+        @keyframes gradient { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.6s ease-out; }
+        input, select, textarea { color-scheme: dark; }
+    </style>
 </head>
-<body>
+<body class="min-h-screen gradient-bg text-white p-4">
 
-    <h1>ایجاد وظیفه جدید</h1>
+<div class="max-w-2xl mx-auto fade-in-up">
+    <a href="{% url 'todos' %}" class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition mb-6 mt-4">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        بازگشت به داشبورد
+    </a>
 
-    <form method="POST">
-        {% csrf_token %}
+    <div class="glass rounded-3xl p-8">
+        <div class="flex items-center gap-4 mb-8">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold">تسک جدید</h1>
+                <p class="text-gray-400 text-sm">اطلاعات تسک را وارد کنید</p>
+            </div>
+        </div>
 
-        {{ form.as_p }}
+        <form method="post" class="space-y-5">
+            {% csrf_token %}
 
-        <button type="submit">ذخیره</button>
-    <a href="{% url 'todos' %}">لیست وظایف</a>
-    </form>
+            <div>
+                <label class="block text-gray-300 text-sm font-medium mb-2">عنوان تسک</label>
+                <input type="text" name="title" required value="{{ form.title.value|default:'' }}" placeholder="مثلاً: خرید نان"
+                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 transition-all">
+                {% if form.title.errors %}<p class="text-red-400 text-xs mt-1">{{ form.title.errors.0 }}</p>{% endif %}
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-300 text-sm font-medium mb-2">اولویت</label>
+                    <select name="priority" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 transition-all">
+                        {% for val, label in form.fields.priority.choices %}
+                        <option value="{{ val }}" {% if form.priority.value == val %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-300 text-sm font-medium mb-2">وضعیت</label>
+                    <select name="status" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 transition-all">
+                        {% for val, label in form.fields.status.choices %}
+                        <option value="{{ val }}" {% if form.status.value == val %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-gray-300 text-sm font-medium mb-2">تاریخ سررسید <span class="text-gray-500">(اختیاری)</span></label>
+                <input type="datetime-local" name="due_date" value="{{ form.due_date.value|default:'' }}"
+                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 transition-all">
+            </div>
+
+            <div>
+                <label class="block text-gray-300 text-sm font-medium mb-2">توضیحات <span class="text-gray-500">(اختیاری)</span></label>
+                <textarea name="description" rows="4" placeholder="جزئیات تسک را بنویسید..."
+                    class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 transition-all resize-none">{{ form.description.value|default:'' }}</textarea>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <a href="{% url 'todos' %}" class="flex-1 text-center py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-semibold transition">انصراف</a>
+                <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 rounded-xl font-semibold shadow-lg transform hover:-translate-y-0.5 transition-all">ساخت تسک</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="تغییر تم" class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 shadow-lg shadow-purple-500/50 flex items-center justify-center hover:scale-110 transition-all z-50">
+    <svg id="theme-icon" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+</button>
+
 </body>
 </html>

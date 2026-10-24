@@ -95,6 +95,8 @@ class DeleteTaskView(LoginRequiredMixin, DeleteView):
 
 
 
+
+
 # def edit_task_view(request, id):
 # 	task=get_object_or_404(TodoList,owner=request.user, id= id)
 # 	if request.method=="POST":

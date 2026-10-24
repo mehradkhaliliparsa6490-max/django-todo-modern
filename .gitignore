@@ -89,3 +89,6 @@ local_settings.py
 .env
 .venv
 db.sqlite3
+templates-backup/
+venv/
+staticfiles/

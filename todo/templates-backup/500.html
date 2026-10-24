@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطای سرور | تسک‌منیجر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .gradient-bg { background: linear-gradient(-45deg, #450a0a, #7f1d1d, #1e1b4b, #450a0a); background-size: 400% 400%; animation: gradient 8s ease infinite; }
+        @keyframes gradient { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.6s ease-out; }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg flex items-center justify-center p-4 relative overflow-hidden">
+    <div class="absolute top-20 right-20 w-72 h-72 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+    <div class="absolute bottom-20 left-20 w-72 h-72 bg-orange-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+    <div class="glass rounded-3xl shadow-2xl p-10 w-full max-w-lg text-center fade-in-up relative z-10">
+        <div class="flex justify-center mb-6">
+            <div class="w-32 h-32 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-2xl shadow-red-500/50">
+                <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <h1 class="text-7xl font-extrabold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent mb-2">۵۰۰</h1>
+        <h2 class="text-2xl font-bold text-white mb-3">خطای سرور</h2>
+        <p class="text-gray-400 mb-8">مشکلی در سرور رخ داده است. لطفاً چند لحظه بعد دوباره تلاش کنید.</p>
+
+        <a href="{% url 'todos' %}" class="inline-flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-semibold rounded-xl shadow-lg transform hover:-translate-y-0.5 transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            تلاش دوباره
+        </a>
+    </div>
+</body>
+</html>
